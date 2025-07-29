@@ -1,51 +1,10 @@
 ---
-import Parser from 'rss-parser';
+import {sortedFeedItems} from '../scripts'
 
-const parser = new Parser();
-
-const sevenDaysAgo = new Date();
-sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-
-const feedSources = [
-  'https://feeds.simplecast.com/p7S4nr_h',
-]
-
-interface FeedItem {
-  feed?: string;
-  title?: string;
-  link?: string;
-  date?: Date;
-  audio?: string;
-}
-
-const feedItems: FeedItem[] = []
-
-await Promise.allSettled(feedSources.map(async (source) => {
-  try {
-    const feed = await parser.parseURL(source);
-    feed.items.forEach((item => {
-      console.log({item})
-      const date = item.pubDate ? new Date(item.pubDate): undefined;
-
-      // if(date && date >= sevenDaysAgo) {
-        feedItems.push({
-          feed: feed.title,
-          title: item.title,
-          link: item.link,
-          date,
-          audio: item.enclosure?.type === 'audio/mpeg' ? item.enclosure.url : undefined
-        });
-      // }
-    }))
-  } catch (error) {
-    console.error(`Error fetching source from ${source}:`, error)
-  }
-}))
-
-//@ts-ignore
-const getDate = (({date}) => date ?? new Date().getTime());
-//@ts-ignore
-const sortedFeedItems = feedItems.sort((a, b) => getDate(b) - getDate(a))
+const readableDate = date => 
+ new Intl.DateTimeFormat("en-GB", {
+    dateStyle: "medium"
+  }).format(date)
 ---
 
 <html lang="en">
@@ -63,8 +22,9 @@ const sortedFeedItems = feedItems.sort((a, b) => getDate(b) - getDate(a))
         <ul>
           <li>
             <a href={item.link}>{item.title}</a>
-            <p>{item.date}</p>
+            <p>{readableDate(item.date)}</p>
             <p>{item.feed}</p>
+            <p>{item.snippet}</p>
             {item.audio && <audio controls src={item.audio}></audio>}
           </li>
         </ul>))
