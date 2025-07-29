@@ -1,27 +1,92 @@
 ---
-const { item } = Astro.props;
+const { item, class: className, ...rest } = Astro.props;
+
 const readableDate = (date) =>
   new Intl.DateTimeFormat('en-GB', {
     dateStyle: 'medium',
   }).format(date);
 ---
 
-<style>
+<style lang='scss'>
   li {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 0 20px;
+
+    &.one {
+      background-color: #ffe3bb;
+    }
+
+    &.two {
+      background-color: #03a6a1;
+    }
+
+    &.three {
+      background-color: #ffa673;
+    }
+
+    &:hover {
+      background-color: #fffadc;
+
+      & > audio {
+        background-color: #ff4f0f;
+      }
+    }
+  }
+
+  h2 {
+    cursor: default;
+    font-weight: 400;
+    font-size: 24px;
+    height: 30%;
+    margin-top: 0;
     overflow: hidden;
-    padding: 20px;
-    border: 1px solid grey;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+
+  p:first-child {
+    text-transform: uppercase;
+    font-weight: 200;
+    text-align: right;
+    margin-bottom: 8px;
+  }
+
+  div {
+    max-height: 25%;
+    overflow: scroll;
+    cursor: s-resize;
+  }
+
+  audio {
+    margin-top: auto;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    &::-webkit-media-controls-enclosure {
+      background: transparent;
+    }
   }
 </style>
 
-<li>
-  <a href={item.link}>{item.title}</a>
-  <p>{readableDate(item.date)}</p>
+<li class={className} {...rest}>
+  <!-- <div> -->
   <p>{item.feed}</p>
-  <details>
-    <summary>About:</summary>
+  <h2>{item.title}</h2>
+  <!-- </div> -->
+  <!-- <a href={item.link}>{item.title}</a> -->
+  <!-- <p>{readableDate(item.date)}</p> -->
+  <!-- <details>
+    <summary>Details</summary>
     <p>{item.snippet}</p>
-  </details>
+  </details> -->
+  <div>{item.snippet}</div>
+
   {item.audio && <audio controls src={item.audio} />}
 </li>
