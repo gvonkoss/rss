@@ -1,34 +1,40 @@
 ---
-import {sortedFeedItems} from '../scripts'
-
-const readableDate = date =>
- new Intl.DateTimeFormat("en-GB", {
-    dateStyle: "medium"
-  }).format(date)
+import { sortedFeedItems } from '../scripts';
+import PodcastCard from '../components/PodcastCard.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>rss!</h1>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  html,body {
+    margin: 0;
+    padding; 0;
+  }
+  
+  ul {
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    grid-auto-rows: 300px;
+  }
+</style>
+
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <meta name='viewport' content='width=device-width' />
+    <meta name='generator' content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
     <main>
-      {sortedFeedItems.map(item => (
-        <ul>
-          <li>
-            <a href={item.link}>{item.title}</a>
-            <p>{readableDate(item.date)}</p>
-            <p>{item.feed}</p>
-            <p>{item.snippet}</p>
-            {item.audio && <audio controls src={item.audio}></audio>}
-          </li>
-        </ul>))
-      }
+      <ul>
+        {sortedFeedItems.map((item) => <PodcastCard item={item} />)}
+      </ul>
     </main>
-	</body>
+  </body>
 </html>

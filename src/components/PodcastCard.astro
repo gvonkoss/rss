@@ -1,0 +1,27 @@
+---
+const { item } = Astro.props;
+const readableDate = (date) =>
+  new Intl.DateTimeFormat('en-GB', {
+    dateStyle: 'medium',
+  }).format(date);
+---
+
+<style>
+  li {
+    display: block;
+    overflow: hidden;
+    padding: 20px;
+    border: 1px solid grey;
+  }
+</style>
+
+<li>
+  <a href={item.link}>{item.title}</a>
+  <p>{readableDate(item.date)}</p>
+  <p>{item.feed}</p>
+  <details>
+    <summary>About:</summary>
+    <p>{item.snippet}</p>
+  </details>
+  {item.audio && <audio controls src={item.audio} />}
+</li>

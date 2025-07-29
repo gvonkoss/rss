@@ -6,7 +6,7 @@ const sources = [
   'https://feeds.simplecast.com/p7S4nr_h', // The Anthropocene Reviewed
   'https://feeds.megaphone.fm/VMP8871377602', // This is Love
   'https://feeds.megaphone.fm/LIT1443896445', // Emergence Magazine
-  'https://feeds.simplecast.com/AuAxH_Bf', // On Being
+  // 'https://feeds.simplecast.com/AuAxH_Bf', // On Being
   'https://feeds.simplecast.com/FO6kxYGj', // Ologies
 ];
 
