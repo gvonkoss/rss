@@ -47,12 +47,12 @@ await Promise.allSettled(
     } catch (error) {
       console.error(`Error fetching source from ${source}:`, error);
     }
-  })
+  }),
 );
 
 //@ts-ignore
 const getDate = ({ date }) => date ?? new Date().getTime();
 export const sortedFeedItems = feedItems.sort(
   //@ts-ignore
-  (a, b) => getDate(b) - getDate(a)
+  (a, b) => getDate(b) - getDate(a),
 );
