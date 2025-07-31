@@ -1,7 +1,8 @@
 ---
-import { sortedFeedItems } from '../scripts';
-import PodcastCard from '../components/PodcastCard.astro';
 import '@fontsource-variable/inclusive-sans';
+import PodcastCard from '../components/PodcastCard.astro';
+import SearchBar from '../components/SearchBar.astro';
+import { sortedFeedItems } from '../scripts';
 
 const variants = ['one', 'two', 'three'];
 ---
@@ -16,15 +17,18 @@ const variants = ['one', 'two', 'three'];
     margin: 0;
     padding: 0;
     font-family: 'Inclusive Sans Variable', sans-serif;
+    background-color: #fffadc;
   }
   header {
+    background-color: #ff4f0f;
+    display: flex;
+
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    display: block;
+
     z-index: 99;
-    background-color: #ff4f0f;
   }
 
   h1 {
@@ -40,6 +44,7 @@ const variants = ['one', 'two', 'three'];
     padding: 0;
     list-style: none;
     display: grid;
+
     grid-template-columns: repeat(4, 25%);
     grid-auto-rows: 300px;
     margin: 0;
@@ -52,14 +57,16 @@ const variants = ['one', 'two', 'three'];
     <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
     <meta name='viewport' content='width=device-width' />
     <meta name='generator' content={Astro.generator} />
-    <title>gvonkoRSS</title>
+
+    <title>vonkoRSS</title>
   </head>
   <body>
     <header>
       <h1>vonkoRSS:Podcasts</h1>
+      <SearchBar />
     </header>
     <main>
-      <ul>
+      <ul id='podcasts'>
         {
           sortedFeedItems.map((item) => (
             <PodcastCard

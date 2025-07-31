@@ -1,0 +1,33 @@
+<style>
+  input {
+    appearance: none;
+    align-self: center;
+
+    background-color: #fffadc;
+    border: 0;
+
+    height: 40px;
+    width: 400px;
+    margin: 0 20px 0 auto;
+    padding: 10px;
+    font-family: inherit;
+  }
+</style>
+
+<script>
+  const searchInput = document.querySelector('input[type=search]');
+
+  searchInput?.addEventListener('input', (e) => {
+    const term = e.target.value.trim().toLowerCase();
+    const podcasts = document.querySelectorAll('ul#podcasts li');
+    podcasts.forEach((item) => {
+      console.log(item.textContent);
+      item.style.display = 'revert';
+
+      !item.textContent?.toLowerCase().includes(term) &&
+        (item.style.display = 'none');
+    });
+  });
+</script>
+
+<input type='search' placeholder='What are we listening to today?' />
