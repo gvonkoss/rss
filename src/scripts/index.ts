@@ -8,13 +8,14 @@ const sources = [
   'https://feeds.megaphone.fm/LIT1443896445', // Emergence Magazine
   // 'https://feeds.simplecast.com/AuAxH_Bf', // On Being
   'https://feeds.simplecast.com/FO6kxYGj', // Ologies
+  'https://rss.amperwave.net/v2/feed/podcorn/4b34b711a4a1ede47c37820155127439', // Deadtalks
 ];
 
 interface FeedItem {
   feed?: string;
+  link?: string;
   title?: string;
   snippet?: string;
-  link?: string;
   date?: Date;
   audio?: string;
 }
@@ -25,7 +26,6 @@ await Promise.allSettled(
   sources.map(async (source) => {
     try {
       const feed = await parser.parseURL(source);
-
       feed.items.forEach((item) => {
         console.log(item);
 
@@ -37,10 +37,10 @@ await Promise.allSettled(
 
         feedItems.push({
           feed: feed.title,
+          link: item.link,
           date,
           title: item.title,
           snippet: item.itunes.subtitle,
-          link: item.link,
           audio,
         });
       });
