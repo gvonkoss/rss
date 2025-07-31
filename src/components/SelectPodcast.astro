@@ -1,0 +1,40 @@
+---
+import { titles } from '../scripts/podcasts';
+---
+
+<style>
+  select {
+    position: relative;
+    appearance: base-select;
+    align-self: center;
+
+    background-color: #fffadc;
+    border: 0;
+    border-radius: 0;
+
+    height: 40px;
+    margin: 0 20px 0 auto;
+    padding: 10px;
+    font-family: inherit;
+  }
+</style>
+<script>
+  const selectInput = document.querySelector('select#titles');
+
+  selectInput?.addEventListener('change', (e) => {
+    const term = e.target.value.toLowerCase();
+    const podcasts = document.querySelectorAll('ul#podcasts li');
+    podcasts.forEach((item) => {
+      item.style.display = 'revert';
+
+      if (term === 'show all podcasts') return;
+      !item.textContent?.toLowerCase().includes(term) &&
+        (item.style.display = 'none');
+    });
+  });
+</script>
+
+<select id='titles'>
+  <option selected>Show all podcasts</option>
+  {titles.map((title) => <option>{title}</option>)}
+</select>
