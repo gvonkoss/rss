@@ -8,6 +8,7 @@ export const PODCASTS = {
   'My Dad Wrote A Porno':
     'https://feeds.acast.com/public/shows/mydadwroteaporno',
   '99% Invisible': 'https://feeds.simplecast.com/BqbsxVfO',
+  "You're Dead To Me": 'https://podcasts.files.bbci.co.uk/p07mdbhg.rss',
 };
 
 export const titles = Object.keys(PODCASTS);
