@@ -1,0 +1,114 @@
+---
+const { item, class: className, ...rest } = Astro.props;
+
+const readableDate = (date) =>
+  new Intl.DateTimeFormat('en-GB', {
+    dateStyle: 'short',
+  }).format(date);
+---
+
+<style lang='scss'>
+  li {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 0 20px;
+
+    &.one {
+      background-color: #ffe3bb;
+    }
+
+    &.two {
+      background-color: #03a6a1;
+    }
+
+    &.three {
+      background-color: #ffa673;
+    }
+
+    &:hover {
+      background-color: #fffadc;
+
+      & > audio {
+        background-color: #ff4f0f;
+      }
+    }
+  }
+
+  h2 {
+    font-weight: 400;
+    font-size: 24px;
+    height: 30%;
+    margin-top: 0;
+    margin-bottom: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+    }
+  }
+
+  p {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    time {
+      font-weight: 100;
+      font-size: 12px;
+    }
+
+    font-weight: 200;
+    margin: 12px 0;
+
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  div {
+    max-height: 25%;
+    overflow: scroll;
+    cursor: s-resize;
+  }
+
+  audio {
+    background-color: transparent;
+    margin-top: auto;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    &::-webkit-media-controls,
+    &::-webkit-media-controls-panel,
+    &::-webkit-media-controls-enclosure {
+      background: transparent;
+    }
+
+    &::-webkit-media-controls-current-time-display,
+    &::-webkit-media-controls-time-remaining-display {
+      text-shadow: none;
+    }
+  }
+</style>
+
+<li class={className} {...rest}>
+  <p>
+    <time datetime={item.date}>{readableDate(item.date)}</time>
+    {item.feed}
+  </p>
+  <h2><a href={item.link}>{item.title}</a></h2>
+  <div>{item.snippet}</div>
+  {item.audio && <audio controls src={item.audio} />}
+</li>
